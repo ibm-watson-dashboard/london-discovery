@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.6.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.lepsistemas</groupId>
 	<artifactId>london-discovery</artifactId>
@@ -20,6 +21,10 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
@@ -48,8 +53,39 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<requiresUnpack>
+						<dependency>
+							<groupId>com.netflix.eureka</groupId>
+							<artifactId>eureka-core</artifactId>
+						</dependency>
+						<dependency>
+							<groupId>com.netflix.eureka</groupId>
+							<artifactId>eureka-client</artifactId>
+						</dependency>
+					</requiresUnpack>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<appName>${heroku.appName}</appName>
+					<includeTarget>false</includeTarget>
+					<includes>
+						<include>target/${project.build.finalName}.jar</include>
+					</includes>
+				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>${project.name}</finalName>
 	</build>
 
 </project>
