@@ -3,6 +3,7 @@ spring:
     name: london-discovery
   security:
     user:
+      name: ${EUREKA_USER_NAME:admin}
       password: ${EUREKA_USER_PASSWORD:password}
     
 server:
